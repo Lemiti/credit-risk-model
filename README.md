@@ -17,8 +17,3 @@ Basel II mandates rigorous risk measurement and capital allocation. For Bati Ban
 | **Logistic Regression** | Interpretable (WoE bins), audit-friendly | Lower predictive power for complex patterns |  
 | **Gradient Boosting**  | Higher accuracy (e.g., AUC)       | "Black-box" nature may hinder regulatory approval |  #Credit Scoring Business Understanding
 
-###How does the Base II Accord's emphasis on risk measurement influence our need for an interpretable and well-documented mode?
-
-###Since we lack a direct "default" label, why is creating a proxy variable necessary, and what are the potential business risks of making predictions based on this proxy?
-
-###What are the key trade-offs between using a simple, interpretable model (like Logistic Regression with WoE) versus a complex, high-performance model (like Gradient Boosting) in a regulated finance context?
