@@ -1,6 +1,6 @@
 # Credit Risk Probability Model for Alternative Data
 
-##🚀 Project Overview
+## 🚀 Project Overview
 **📌Business Context**:  
 Bati Bank partners with an eCommerce platform to offer a **buy-now-pay-later (BNPL)** service. This project builds a credit scoring model using transactional data to predict default risk and assign credit scores.
 
@@ -10,7 +10,7 @@ Develop an end-to-end ML pipeline that:
 2. Predicts risk probabilities and optimal loan terms.
 
 ---
-##📁 Project Structure  
+## 📁 Project Structure  
 ```
 credit-risk-model/
 ├── data/
