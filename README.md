@@ -1,3 +1,37 @@
+# Credit Risk Probability Model for Alternative Data
+
+##🚀 Project Overview
+**📌Business Context**:  
+Bati Bank partners with an eCommerce platform to offer a **buy-now-pay-later (BNPL)** service. This project builds a credit scoring model using transactional data to predict default risk and assign credit scores.
+
+**Goal**:  
+Develop an end-to-end ML pipeline that:
+1. Creates a proxy for "default risk" using RFM (Recency, Frequency, Monetary) analysis.
+2. Predicts risk probabilities and optimal loan terms.
+
+---
+##📁 Project Structure  
+```
+credit-risk-model/
+├── data/
+│ ├── raw/ # Original dataset (e.g., Xente Challenge data)
+│ └── processed/ # Processed data for modeling
+├── notebooks/
+│ └── 1.0-eda.ipynb # Exploratory Data Analysis
+├── src/
+│ ├── data_processing.py # Feature engineering pipeline
+│ ├── train.py # Model training script
+│ ├── predict.py # Inference script
+│ └── api/ # FastAPI deployment
+│ ├── main.py
+│ └── pydantic_models.py
+├── tests/
+│ └── test_data_processing.py # Unit tests
+├── Dockerfile # Containerization
+├── requirements.txt # Python dependencies
+└── README.md # This file
+```
+
 ### Credit Scoring Business Understanding  
 
 ### 1. Basel II’s Influence on Model Design  
