@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 
 
 class DatetimeFeatureExtractor(BaseEstimator, TransformerMixin):
-  def __init__(self, datetime_col):
+  def __init__(self, datetime_col='TransactionStartTime'):
     self.datetime_col = datetime_col
 
   def fit(self, X, y=None):
@@ -27,8 +27,33 @@ class DatetimeFeatureExtractor(BaseEstimator, TransformerMixin):
 
 
 
+class CustomerAggregateFeatures(BaseEstimator, TransformerMixin):
+  def __init__(self, customer_id_col='CustomerId'):
+    self.customer_id_col = customer_id_col
+  
+  def fit(self, X, y=None):
+    return self
+  
+  def transform(self, X):
+    X = X.copy()
+    grouped = x.groupby(self.customer_id_col).agg({
+      'Amount' : ['sum', 'mean', 'std'],
+      'Value': ['sum', 'mean', 'std'],
+      'TransactionId': 'count',
+    }).reset_index()
+
+    grouped.columns = [self.customer_id_col] + [
+      f'{i}_{j}' for i, j in grouped.columns[1:]
+    ]
+
+    return grouped
+
   def build_pipeline():
-    numeric_features = ['Amount', 'Value']
+    numeric_features = [
+      'Amount_sum', 'Amount_mean', 'Amount_std',
+      'Value_sum', 'Value_mean', 'Value_std',
+      'TransactionId_count'
+    ]
     catagorical_features = ['ChannelId', 'ProductCategory']
 
     numeric_transformer = Pipeline(steps=[
@@ -43,11 +68,12 @@ class DatetimeFeatureExtractor(BaseEstimator, TransformerMixin):
 
     preprocessor = ColumnTransformer(transformers=[
       ('num', numeric_transformer, numeric_features),
-      ('cat', categorical_transformer, catagorical_features)
+      #('cat', categorical_transformer, catagorical_features)
     ])
 
     pipeline = Pipeline(steps=[
-      ('datetime', DatetimeFeatureExtractor('TransactionStartTime')),
+      ('datetime', DatetimeFeatureExtractor()),
+      ('aggregate', CustomerAggregateFeatures())
       ('preprocessor', preprocessor)
     ])
 
