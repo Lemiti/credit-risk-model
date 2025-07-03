@@ -36,15 +36,23 @@ class CustomerAggregateFeatures(BaseEstimator, TransformerMixin):
   
   def transform(self, X):
     X = X.copy()
-    grouped = X.groupby(self.customer_id_col).agg({
-      'Amount' : ['sum', 'mean', 'std'],
+
+    numeric_agg = X.groupby(self.customer_id_col).agg({
+      'Amount': ['sum', 'mean', 'std'],
       'Value': ['sum', 'mean', 'std'],
       'TransactionId': 'count',
-    }).reset_index()
+    })
+
+    cat_agg = X.groupby(self.customer_id_col).agg({
+      'ChannelId': lambda x: x.mode().iloc[0]  if not x.mode().empty else np.nan,
+      'ProductCategory': lambda x: x.mode().iloc[0] if not x.mode().empty else np.nan
+    })
+
+    grouped = pd.concat([numeric_agg,cat_agg], axis=1).reset_index()
 
     grouped.columns = [self.customer_id_col] + [
-      f'{i}_{j}' for i, j in grouped.columns[1:]
-    ]
+      f'{i}_{j}' if j else i for i, j in grouped.columns[1:-2]
+    ] + ['ChannelId', 'ProductCategory']
 
     return grouped
 
@@ -68,7 +76,7 @@ def build_pipeline():
 
     preprocessor = ColumnTransformer(transformers=[
       ('num', numeric_transformer, numeric_features),
-      #('cat', categorical_transformer, catagorical_features)
+      ('cat', categorical_transformer, catagorical_features)
     ])
 
     pipeline = Pipeline(steps=[
@@ -86,6 +94,6 @@ if __name__ == "__main__":
 
   processed = pipeline.fit_transform(data)
 
-  pd.DataFrame(processed).to_csv("../../data/processed/processed_data.csv", index=False)
+  pd.DataFrame(processed).to_csv("../../data/processed/model_ready_data.csv", index=False)
   
   print(processed.shape)
