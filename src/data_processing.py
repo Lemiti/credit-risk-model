@@ -36,7 +36,7 @@ class CustomerAggregateFeatures(BaseEstimator, TransformerMixin):
   
   def transform(self, X):
     X = X.copy()
-    grouped = x.groupby(self.customer_id_col).agg({
+    grouped = X.groupby(self.customer_id_col).agg({
       'Amount' : ['sum', 'mean', 'std'],
       'Value': ['sum', 'mean', 'std'],
       'TransactionId': 'count',
@@ -48,7 +48,7 @@ class CustomerAggregateFeatures(BaseEstimator, TransformerMixin):
 
     return grouped
 
-  def build_pipeline():
+def build_pipeline():
     numeric_features = [
       'Amount_sum', 'Amount_mean', 'Amount_std',
       'Value_sum', 'Value_mean', 'Value_std',
@@ -73,8 +73,19 @@ class CustomerAggregateFeatures(BaseEstimator, TransformerMixin):
 
     pipeline = Pipeline(steps=[
       ('datetime', DatetimeFeatureExtractor()),
-      ('aggregate', CustomerAggregateFeatures())
+      ('aggregate', CustomerAggregateFeatures()),
       ('preprocessor', preprocessor)
     ])
 
     return pipeline
+
+if __name__ == "__main__":
+  data = pd.read_csv("../../data/raw/data.csv")
+
+  pipeline = build_pipeline()
+
+  processed = pipeline.fit_transform(data)
+
+  pd.DataFrame(processed).to_csv("../../data/processed/processed_data.csv", index=False)
+  
+  print(processed.shape)
