@@ -1,0 +1,10 @@
+artifact_location: file:///content/drive/MyDrive/10Acadamy/credit-risk-model/src/mlruns/0/models/m-652d42dbc49d468386a9d11d2d03dc38/artifacts
+creation_timestamp: 1751572979319
+experiment_id: '0'
+last_updated_timestamp: 1751572982476
+model_id: m-652d42dbc49d468386a9d11d2d03dc38
+model_type: null
+name: gradient_boosting
+source_run_id: 12ad3591698045e6a7d9b235dcc27362
+status: 2
+status_message: null
