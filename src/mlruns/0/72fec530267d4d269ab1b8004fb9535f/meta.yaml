@@ -1,0 +1,14 @@
+artifact_uri: file:///content/drive/MyDrive/10Acadamy/credit-risk-model/src/mlruns/0/72fec530267d4d269ab1b8004fb9535f/artifacts
+end_time: 1751575494216
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 72fec530267d4d269ab1b8004fb9535f
+run_name: gradient_boosting
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751575489935
+status: 3
+tags: []
+user_id: root

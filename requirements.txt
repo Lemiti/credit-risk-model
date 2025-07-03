@@ -2,8 +2,5 @@ pandas
 matplotlib.pyplot
 seaborn
 numpy
-sklearn.base
-sklearn.pipeline
-sklearn.impute
-sklearn.preprocessing
-sklearn.compose
+sklearn
+mlflow
