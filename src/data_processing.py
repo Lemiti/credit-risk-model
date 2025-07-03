@@ -88,12 +88,24 @@ def build_pipeline():
     return pipeline
 
 if __name__ == "__main__":
+  # After loading data
   data = pd.read_csv("../../data/raw/data.csv")
 
-  pipeline = build_pipeline()
+  # Save CustomerId before pipeline removes it
+  customer_ids = data[['CustomerId']].drop_duplicates()
 
+  # Run pipeline
+  pipeline = build_pipeline()
   processed = pipeline.fit_transform(data)
 
-  pd.DataFrame(processed).to_csv("../../data/processed/model_ready_data.csv", index=False)
-  
+  # Rebuild DataFrame from output
+  # (Optional: get column names too, as we did earlier)
+  processed_df = pd.DataFrame(processed)
+
+  # Concatenate CustomerId back
+  final_model_ready_df = pd.concat([customer_ids.reset_index(drop=True), processed_df], axis=1)
+
+  # Save to disk
+  final_model_ready_df.to_csv("../../data/processed/model_ready_data.csv", index=False)
+
   print(processed.shape)
